@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-start;
+      height: 100vh;
+      margin: 0;
+      background: url('https://i.postimg.cc/DfJhH3jB/313037156.jpg') no-repeat center center fixed;
+      background-size: cover;
+      cursor: none; /* Hide the mouse cursor */
+    }
+
+    canvas {
+      border: 2px solid #000;
+      display: block;
+      margin-left: 20px;
+      margin-top: 20px;
+    }
+
+    #crosshair {
+      position: absolute;
+      width: 50px; /* Set the crosshair width to the same size as the duck */
+      height: 50px; /* Set the crosshair height to the same size as the duck */
+      pointer-events: none;
+    }
+
+    #scoreboard {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      color: #000;
+      font-size: 24px;
+      font-family: Arial, sans-serif;
+    }
+  </style>
+  <title>Duck Hunt Game</title>
+</head>
+<body>
+  <div id="scoreboard">Score: 0</div>
+  <canvas id="duckHuntCanvas" width="1920" height="1080"></canvas>
+  <img src="https://i.postimg.cc/CxtQCGcL/arrow.png" id="crosshair" alt="crosshair">
+  <script>
+    // Game variables
+    const canvas = document.getElementById('duckHuntCanvas');
+    const ctx = canvas.getContext('2d');
+    const crosshair = document.getElementById('crosshair');
+    const scoreboard = document.getElementById('scoreboard');
+    let score = 0;
+    let ducks = [];
+
+    // Load gunshot sound
+    const gunshotSound = new Audio('https://drive.google.com/uc?id=1M5UjpzfEoN8Uoxn4ylfcSivlAgkpvfgk');
+
+    // Duck class
+    class Duck {
+      constructor(x, y, speed) {
+        this.x = x;
+        this.y = y;
+        this.width = 50;
+        this.height = 50;
+        this.speed = speed;
+        this.image = new Image();
+        this.image.src = 'https://i.postimg.cc/28DhPVKj/duck.png'; // Replace with the actual path to your duck image
+      }
+
+      draw() {
+        ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+      }
+
+      move() {
+        this.y -= this.speed;
+        if (this.y + this.height < 0) {
+          this.reset();
+        }
+      }
+
+      reset() {
+        this.x = Math.random() * (canvas.width - this.width);
+        this.y = canvas.height;
+      }
+    }
+
+    // Initialize ducks
+    for (let i = 0; i < 3; i++) {
+      ducks.push(new Duck(Math.random() * (canvas.width - 50), canvas.height, Math.random() * 2 + 1));
+    }
+
+    // Event listener for shooting
+    canvas.addEventListener('click', shootDuck);
+
+    function shootDuck(event) {
+      const mouseX = event.clientX - canvas.getBoundingClientRect().left;
+      const mouseY = event.clientY - canvas.getBoundingClientRect().top;
+
+      ducks.forEach((duck, index) => {
+        if (
+          mouseX >= duck.x &&
+          mouseX <= duck.x + duck.width &&
+          mouseY >= duck.y &&
+          mouseY <= duck.y + duck.height
+        ) {
+          score += 10;
+          ducks[index].reset();
+          gunshotSound.play(); // Play gunshot sound
+          updateScoreboard();
+        }
+      });
+    }
+
+    // Event listener for crosshair movement
+    canvas.addEventListener('mousemove', moveCrosshair);
+
+    function moveCrosshair(event) {
+      const mouseX = event.clientX - canvas.getBoundingClientRect().left;
+      const mouseY = event.clientY - canvas.getBoundingClientRect().top;
+
+      crosshair.style.left = mouseX - crosshair.width / 2 + 'px';
+      crosshair.style.top = mouseY - crosshair.height / 2 + 'px';
+    }
+
+    // Update the scoreboard
+    function updateScoreboard() {
+      scoreboard.textContent = 'Score: ' + score;
+    }
+
+    // Game loop
+    function gameLoop() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      ducks.forEach((duck) => {
+        duck.move();
+        duck.draw();
+      });
+
+      requestAnimationFrame(gameLoop);
+    }
+
+    // Start the game loop
+    gameLoop();
+  </script>
+</body>
+</html>
