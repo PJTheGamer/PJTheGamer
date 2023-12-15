@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    /* Your existing styles here */
+
+    /* New styles for the welcome screen */
+    #welcomeScreen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background: url('https://i.postimg.cc/c4h4pTNH/background.jpg') no-repeat center center fixed;
+      background-size: cover;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000; /* Higher z-index to appear above the game content */
+    }
+
+    #letsGoButton {
+      font-size: 24px;
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+
+    #popupMenu {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0, 0, 0, 0.9);
+      padding: 20px;
+      text-align: center;
+      color: #fff;
+      z-index: 1500;
+    }
+
+    #closePopup {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      cursor: pointer;
+    }
+
+    .thumbnailContainer {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 20px;
+    }
+
+    .thumbnail {
+      position: relative;
+      width: 150px;
+      height: 150px;
+      background: #333;
+      border: 2px solid #fff;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .thumbnail img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .thumbnail:hover {
+      transform: scale(1.1);
+    }
+
+    .thumbnailText {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      color: #fff;
+      padding: 5px;
+      font-size: 12px;
+    }
+
+    /* Styles for the logo */
+    #logo {
+      width: 150px; /* Adjust the size as needed */
+      margin-bottom: 20px;
+    }
+
+    /* Styles for social media icons */
+    #socialIcons {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 2000;
+    }
+
+    #socialIcons img {
+      width: 30px; /* Adjust the size as needed */
+      margin-left: 10px;
+      cursor: pointer;
+    }
+  </style>
+  <title>Duck Hunt Game</title>
+</head>
+<body>
+  <!-- Welcome Screen -->
+  <div id="welcomeScreen">
+    <img id="logo" src="https://i.postimg.cc/MKWP4LXL/SAVE-20210826-015151.jpg" alt="PJTheGamer Logo">
+    <h1 style="color: #fff;">Welcome to PJTheGamer's Webpage</h1>
+    <button id="letsGoButton" onclick="showPopupMenu()">Let's Go</button>
+  </div>
+
+  <!-- Popup Menu Screen -->
+  <div id="popupMenu">
+    <div id="closePopup" onclick="closePopupMenu()">X</div>
+    <h2>Game Menu</h2>
+    <div class="thumbnailContainer">
+      <div class="thumbnail" onclick="startGame()">
+        <img src='https://i.postimg.cc/kX0XLdqv/unnamedq.png' alt='Duck Hunt Thumbnail'>
+        <div class="thumbnailText">Duck Hunt</div>
+      </div>
+      <div class="thumbnail" onclick="showInstructions()">Thumbnail 2</div>
+      <div class="thumbnail" onclick="startGame()">Thumbnail 3</div>
+      <div class="thumbnail" onclick="showInstructions()">Thumbnail 4</div>
+    </div>
+  </div>
+
+  <!-- Game Canvas and Elements -->
+  <div id="scoreboard">Score: 0</div>
+  <canvas id="duckHuntCanvas" width="1920" height="1080"></canvas>
+  <img src="https://i.postimg.cc/CxtQCGcL/arrow.png" id="crosshair" alt="crosshair">
+
+  <!-- Social Media Icons -->
+  <div id="socialIcons">
+    <a href="https://www.youtube.com/@PJTheGamer1" target="_blank"><img src="https://i.postimg.cc/8PrfytD6/2-1.png" alt="YouTube"></a>
+    <a href="https://www.instagram.com/pj_the_gamer/?igshid=OGQ5ZDc2ODk2ZA%3D%3D" target="_blank"><img src="https://i.postimg.cc/J0ydkbbL/1-1.png" alt="Instagram"></a>
+  </div>
+
+  <script>
+    // Your existing script here
+
+    // New script for the welcome screen and popup menu
+    const welcomeScreen = document.getElementById('welcomeScreen');
+    const letsGoButton = document.getElementById('letsGoButton');
+    const popupMenu = document.getElementById('popupMenu');
+
+    function showPopupMenu() {
+      popupMenu.style.display = 'block';
+    }
+
+    function closePopupMenu() {
+      popupMenu.style.display = 'none';
+    }
+
+     function startGame() {
+    closePopupMenu();
+    // Navigate to Duckhunt.html
+    window.location.href = 'Duckhunt.html';
+  }
+
+    function showInstructions() {
+      closePopupMenu();
+      // Add logic to show game instructions (if needed)
+      alert('Game Instructions:\nShoot the ducks to score points!');
+    }
+  </script>
+</body>
+</html>
