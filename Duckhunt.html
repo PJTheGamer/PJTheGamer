@@ -37,6 +37,52 @@
       font-size: 24px;
       font-family: Arial, sans-serif;
     }
+
+    #rotatePopup {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #3498db; /* Blue background */
+      color: #fff;
+      text-align: center;
+      align-items: center;
+      justify-content: center;
+      display: flex;
+      flex-direction: column;
+      animation: bounceIn 1s ease-in-out;
+    }
+
+    #rotatePopup img {
+      width: 150px;
+      height: auto;
+      margin-bottom: 20px;
+      transform: rotate(20deg); /* Rotate the duck for added whimsy */
+      animation: rotateDuck 2s infinite linear; /* Make the duck rotate continuously */
+    }
+
+    #rotatePopup p {
+      margin-bottom: 20px;
+    }
+
+    @keyframes bounceIn {
+      from {
+        transform: scale(0.5);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    @keyframes rotateDuck {
+      to {
+        transform: rotate(380deg);
+      }
+    }
   </style>
   <title>Duck Hunt Game</title>
 </head>
@@ -44,12 +90,20 @@
   <div id="scoreboard">Score: 0</div>
   <canvas id="duckHuntCanvas" width="1920" height="1080"></canvas>
   <img src="https://i.postimg.cc/CxtQCGcL/arrow.png" id="crosshair" alt="crosshair">
+
+  <div id="rotatePopup">
+    <img src="https://i.postimg.cc/28DhPVKj/duck.png" alt="Duck Icon">
+    <p>Oh no! The ducks are dizzy! Rotate your phone to un-dizzify them!</p>
+    <p>(or click anywhere to continue the dizzy duck hunt)</p>
+  </div>
+
   <script>
     // Game variables
     const canvas = document.getElementById('duckHuntCanvas');
     const ctx = canvas.getContext('2d');
     const crosshair = document.getElementById('crosshair');
     const scoreboard = document.getElementById('scoreboard');
+    const rotatePopup = document.getElementById('rotatePopup');
     let score = 0;
     let ducks = [];
 
@@ -142,6 +196,50 @@
 
     // Start the game loop
     gameLoop();
+
+    // Check orientation for popup
+    if (window.DeviceOrientationEvent) {
+      window.addEventListener('orientationchange', checkOrientation);
+      checkOrientation();
+    }
+
+    function checkOrientation() {
+      const orientation = window.orientation || window.screen.orientation.angle;
+
+      if (Math.abs(orientation) === 90) {
+        hideRotatePopup();
+      } else {
+        showRotatePopup();
+      }
+    }
+
+    function showRotatePopup() {
+      rotatePopup.style.display = 'flex';
+      window.addEventListener('click', hideRotatePopup);
+    }
+
+    function hideRotatePopup() {
+      rotatePopup.style.display = 'none';
+      canvas.style.display = 'block';
+      window.removeEventListener('click', hideRotatePopup);
+      initGame();
+    }
+
+    function initGame() {
+      console.log('Initializing game...');
+
+      // Game initialization code...
+      // For example, you might want to re-initialize your ducks array here
+      ducks = [];
+      for (let i = 0; i < 3; i++) {
+        ducks.push(new Duck(Math.random() * (canvas.width - 50), canvas.height, Math.random() * 2 + 1));
+      }
+
+      console.log('Game initialized.');
+
+      // Start the game loop
+      gameLoop();
+    }
   </script>
 </body>
 </html>
