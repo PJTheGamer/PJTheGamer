@@ -1,1 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Your Website Title</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background: #111; /* Dark solid background color */
+      color: #fff;
+      overflow: hidden;
+    }
 
+    /* Styles for the overlay */
+    #disclaimer-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #111; /* Dark solid background color for the overlay */
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    /* Styles for the disclaimer content */
+    #disclaimer-content {
+      max-width: 600px;
+      padding: 40px;
+      background: url('space-background.jpg') center/cover;
+      text-align: center;
+      border-radius: 10px;
+      animation: fadeIn 1s ease-out;
+      position: relative;
+    }
+
+    /* Styles for the close button */
+    #close-button {
+      background: #007BFF;
+      color: #fff;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 20px;
+      transition: background 0.3s ease-in-out;
+    }
+
+    #close-button:hover {
+      background: #0056b3;
+    }
+
+    /* Animation for fading in the content */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* Styles for twinkling stars animation */
+    .twinkling {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: #fff;
+      box-shadow: 0 0 5px #fff;
+      animation: twinkling 1s infinite;
+    }
+
+    /* Animation for twinkling stars */
+    @keyframes twinkling {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    /* Styles for the floating spaceship */
+    #spaceship {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      background: url('spaceship.png') center/cover;
+      animation: floatSpaceship 5s ease-in-out infinite alternate;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    /* Animation for the floating spaceship */
+    @keyframes floatSpaceship {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+
+    /* Hover effect for the spaceship */
+    #spaceship:hover {
+      transform: scaleY(1.5);
+    }
+
+    /* Styles for the pulsating button */
+    #enter-cosmos-button {
+      background: #00ffcc;
+      color: #000;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 20px;
+      margin-top: 20px;
+      animation: pulsate 1.5s ease-in-out infinite;
+    }
+
+    /* Animation for the pulsating button */
+    @keyframes pulsate {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Website content goes here -->
+
+  <!-- Disclaimer Popup -->
+  <div id="disclaimer-overlay">
+    <div id="disclaimer-content">
+      <div id="spaceship"></div>
+      <p style="font-size: 24px;">🚀 Greetings, Cosmic Traveler! 🌌</p>
+      <p style="font-size: 18px;">🎮 Exciting news: PJTheGamer.com is under celestial construction! 🌠 Our pixel architects are crafting a gaming utopia, with warp zones on a temporary hiatus for a celestial upgrade. Patience, brave soul! Your gaming adventure is in the cosmic works.</p>
+      <p style="font-size: 18px;">📸 For sneak peeks and behind-the-scenes magic, join us on Instagram: <a href="https://www.instagram.com/PJ_The_Gamer/" target="_blank" style="color: #fff; text-decoration: underline;">PJ_The_Gamer</a>. 💻 Dive into the development magic at <span style="color: #fff; text-decoration: none;">PJTheGamer.com</span>! Your presence powers our pixel odyssey! 🌟🎮</p>
+      <button id="enter-cosmos-button" onclick="closeDisclaimer()">Enter the Cosmos</button>
+      <div class="twinkling" style="top: 100px; left: 30%;"></div>
+      <div class="twinkling" style="top: 200px; left: 60%;"></div>
+      <div class="twinkling" style="top: 300px; left: 40%;"></div>
+    </div>
+  </div>
+
+  <script>
+    // Function to close the disclaimer popup
+    function closeDisclaimer() {
+      document.getElementById('disclaimer-overlay').style.display = 'none';
+    }
+
+    // Show the disclaimer popup with a delay for a dramatic entrance
+    window.onload = function() {
+      setTimeout(function() {
+        document.getElementById('disclaimer-overlay').style.display = 'flex';
+      }, 1000);
+    };
+  </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <style>
+    /* Your existing styles here */
+
+    /* New styles for the welcome screen */
+    #welcomeScreen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background: url('https://i.postimg.cc/c4h4pTNH/background.jpg') no-repeat center center fixed;
+      background-size: cover;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000; /* Higher z-index to appear above the game content */
+    }
+
+    #letsGoButton {
+      font-size: 24px;
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+
+    #popupMenu {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0, 0, 0, 0.9);
+      padding: 20px;
+      text-align: center;
+      color: #fff;
+      z-index: 1500;
+    }
+
+    #closePopup {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      cursor: pointer;
+    }
+
+    .thumbnailContainer {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 20px;
+    }
+
+    .thumbnail {
+      position: relative;
+      width: 150px;
+      height: 150px;
+      background: #333;
+      border: 2px solid #fff;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .thumbnail img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .thumbnail:hover {
+      transform: scale(1.1);
+    }
+
+    .thumbnailText {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      color: #fff;
+      padding: 5px;
+      font-size: 12px;
+    }
+
+    /* Styles for the logo */
+    #logo {
+      width: 150px; /* Adjust the size as needed */
+      margin-bottom: 20px;
+    }
+
+    /* Styles for social media icons */
+    #socialIcons {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 2000;
+    }
+
+    #socialIcons img {
+      width: 30px; /* Adjust the size as needed */
+      margin-left: 10px;
+      cursor: pointer;
+    }
+  </style>
+  <title>Duck Hunt Game</title>
+</head>
+<body>
+  <!-- Welcome Screen -->
+  <div id="welcomeScreen">
+    <img id="logo" src="https://i.postimg.cc/MKWP4LXL/SAVE-20210826-015151.jpg" alt="PJTheGamer Logo">
+    <h1 style="color: #fff;">Welcome to PJTheGamer's Webpage</h1>
+    <button id="letsGoButton" onclick="showPopupMenu()">Let's Go</button>
+  </div>
+
+  <!-- Popup Menu Screen -->
+  <div id="popupMenu">
+    <div id="closePopup" onclick="closePopupMenu()">X</div>
+    <h2>Game Menu</h2>
+    <div class="thumbnailContainer">
+      <div class="thumbnail" onclick="startGame()">
+        <img src='https://i.postimg.cc/kX0XLdqv/unnamedq.png' alt='Duck Hunt Thumbnail'>
+        <div class="thumbnailText">Duck Hunt</div>
+      </div>
+      <div class="thumbnail" onclick="showInstructions()">Thumbnail 2</div>
+      <div class="thumbnail" onclick="startGame()">Thumbnail 3</div>
+      <div class="thumbnail" onclick="showInstructions()">Thumbnail 4</div>
+    </div>
+  </div>
+
+  <!-- Game Canvas and Elements -->
+  <div id="scoreboard">Score: 0</div>
+  <canvas id="duckHuntCanvas" width="1920" height="1080"></canvas>
+  <img src="https://i.postimg.cc/CxtQCGcL/arrow.png" id="crosshair" alt="crosshair">
+
+  <!-- Social Media Icons -->
+  <div id="socialIcons">
+    <a href="https://www.youtube.com/@PJTheGamer1" target="_blank"><img src="https://i.postimg.cc/8PrfytD6/2-1.png" alt="YouTube"></a>
+    <a href="https://www.instagram.com/pj_the_gamer/?igshid=OGQ5ZDc2ODk2ZA%3D%3D" target="_blank"><img src="https://i.postimg.cc/J0ydkbbL/1-1.png" alt="Instagram"></a>
+  </div>
+
+  <script>
+    // Your existing script here
+
+    // New script for the welcome screen and popup menu
+    const welcomeScreen = document.getElementById('welcomeScreen');
+    const letsGoButton = document.getElementById('letsGoButton');
+    const popupMenu = document.getElementById('popupMenu');
+
+    function showPopupMenu() {
+      popupMenu.style.display = 'block';
+    }
+
+    function closePopupMenu() {
+      popupMenu.style.display = 'none';
+    }
+
+     function startGame() {
+    closePopupMenu();
+    // Navigate to Duckhunt.html
+    window.location.href = 'Duckhunt.html';
+  }
+
+    function showInstructions() {
+      closePopupMenu();
+      // Add logic to show game instructions (if needed)
+      alert('Game Instructions:\nShoot the ducks to score points!');
+    }
+  </script>
+</body>
+</html>
