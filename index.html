@@ -269,58 +269,71 @@
   </div>
 
   <!-- Popup Menu Screen -->
-  <div id="popupMenu">
-    <div id="closePopup" onclick="closePopupMenu()">X</div>
-    <h2>Game Menu</h2>
-    <div class="thumbnailContainer">
-      <div class="thumbnail" onclick="startGame()">
-        <img src='https://i.postimg.cc/kX0XLdqv/unnamedq.png' alt='Duck Hunt Thumbnail'>
-        <div class="thumbnailText">Duck Hunt</div>
-      </div>
-      <div class="thumbnail" onclick="showInstructions()">Thumbnail 2</div>
-      <div class="thumbnail" onclick="startGame()">Thumbnail 3</div>
-      <div class="thumbnail" onclick="showInstructions()">Thumbnail 4</div>
+<div id="popupMenu">
+  <div id="closePopup" onclick="closePopupMenu()">X</div>
+  <h2>Game Menu</h2>
+  <div class="thumbnailContainer">
+    <div class="thumbnail" onclick="startGame('Duckhunt.html')">
+      <img src='https://i.postimg.cc/kX0XLdqv/unnamedq.png' alt='Duck Hunt Thumbnail'>
+      <div class="thumbnailText">Duck Hunt</div>
+    </div>
+    <div class="thumbnail" onclick="startGame('TicTacToe.html')">
+      <img src='https://i.postimg.cc/PqbxNBmX/q-1.jpg' alt='TicTacToe'>
+      <div class="thumbnailText">TicTacToe</div>
+    </div>
+    <div class="thumbnail" onclick="startGame('AnotherGame.html')">
+      <!-- Replace 'AnotherGame.html' with the actual URL of Thumbnail 3 -->
+      Thumbnail 3
+    </div>
+    <div class="thumbnail" onclick="showInstructions()">
+      <!-- Replace 'showInstructions' with the actual function for Thumbnail 4 -->
+      Thumbnail 4
     </div>
   </div>
+</div>
 
-  <!-- Game Canvas and Elements -->
-  <div id="scoreboard">Score: 0</div>
-  <canvas id="duckHuntCanvas" width="1920" height="1080"></canvas>
-  <img src="https://i.postimg.cc/CxtQCGcL/arrow.png" id="crosshair" alt="crosshair">
+<!-- Game Canvas and Elements -->
+<div id="scoreboard">Score: 0</div>
+<canvas id="duckHuntCanvas" width="1920" height="1080"></canvas>
+<img src="https://i.postimg.cc/CxtQCGcL/arrow.png" id="crosshair" alt="crosshair">
 
-  <!-- Social Media Icons -->
-  <div id="socialIcons">
-    <a href="https://www.youtube.com/@PJTheGamer1" target="_blank"><img src="https://i.postimg.cc/8PrfytD6/2-1.png" alt="YouTube"></a>
-    <a href="https://www.instagram.com/pj_the_gamer/?igshid=OGQ5ZDc2ODk2ZA%3D%3D" target="_blank"><img src="https://i.postimg.cc/J0ydkbbL/1-1.png" alt="Instagram"></a>
-  </div>
+<!-- Social Media Icons -->
+<div id="socialIcons">
+  <a href="https://www.youtube.com/@PJTheGamer1" target="_blank">
+    <img src="https://i.postimg.cc/8PrfytD6/2-1.png" alt="YouTube">
+  </a>
+  <a href="https://www.instagram.com/pj_the_gamer/?igshid=OGQ5ZDc2ODk2ZA%3D%3D" target="_blank">
+    <img src="https://i.postimg.cc/J0ydkbbL/1-1.png" alt="Instagram">
+  </a>
+</div>
 
-  <script>
-    // Your existing script here
+<script>
+  // Your existing script here
 
-    // New script for the welcome screen and popup menu
-    const welcomeScreen = document.getElementById('welcomeScreen');
-    const letsGoButton = document.getElementById('letsGoButton');
-    const popupMenu = document.getElementById('popupMenu');
+  // New script for the welcome screen and popup menu
+  const welcomeScreen = document.getElementById('welcomeScreen');
+  const letsGoButton = document.getElementById('letsGoButton');
+  const popupMenu = document.getElementById('popupMenu');
 
-    function showPopupMenu() {
-      popupMenu.style.display = 'block';
-    }
-
-    function closePopupMenu() {
-      popupMenu.style.display = 'none';
-    }
-
-     function startGame() {
-    closePopupMenu();
-    // Navigate to Duckhunt.html
-    window.location.href = 'Duckhunt.html';
+  function showPopupMenu() {
+    popupMenu.style.display = 'block';
   }
 
-    function showInstructions() {
-      closePopupMenu();
-      // Add logic to show game instructions (if needed)
-      alert('Game Instructions:\nShoot the ducks to score points!');
-    }
-  </script>
+  function closePopupMenu() {
+    popupMenu.style.display = 'none';
+  }
+
+  function startGame(gameURL) {
+    closePopupMenu();
+    // Navigate to the specified game URL
+    window.location.href = gameURL;
+  }
+
+  function showInstructions() {
+    closePopupMenu();
+    // Add logic to show game instructions (if needed)
+    alert('Game Instructions:\nShoot the ducks to score points!');
+  }
+</script>
 </body>
 </html>
