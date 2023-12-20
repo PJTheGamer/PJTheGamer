@@ -11,7 +11,7 @@
       height: 100vh;
       margin: 0;
       background: url('https://i.postimg.cc/DfJhH3jB/313037156.jpg') no-repeat center center fixed;
-      background-size: 100% 100%;
+      background-size: cover;
       cursor: none; /* Hide the mouse cursor */
     }
 
@@ -26,8 +26,8 @@
 
     #crosshair {
       position: absolute;
-      width: 50px; /* Set the crosshair width to the same size as the duck */
-      height: 50px; /* Set the crosshair height to the same size as the duck */
+      width: 50px;
+      height: 50px;
       pointer-events: none;
     }
 
@@ -47,7 +47,7 @@
       left: 0;
       width: 100vw;
       height: 100vh;
-      background: #3498db; /* Blue background */
+      background: #3498db;
       color: #fff;
       text-align: center;
       align-items: center;
@@ -61,8 +61,8 @@
       width: 150px;
       height: auto;
       margin-bottom: 20px;
-      transform: rotate(20deg); /* Rotate the duck for added whimsy */
-      animation: rotateDuck 2s infinite linear; /* Make the duck rotate continuously */
+      transform: rotate(20deg);
+      animation: rotateDuck 2s infinite linear;
     }
 
     #rotatePopup p {
@@ -117,26 +117,25 @@
       constructor(x, y, speed) {
         this.x = x;
         this.y = y;
-        this.width = 50;
-        this.height = 50;
-        this.speed = speed;
+        this.size = Math.random() * (50 - 30) + 30;
+        this.speed = speed / 4;
         this.image = new Image();
-        this.image.src = 'https://i.postimg.cc/28DhPVKj/duck.png'; // Replace with the actual path to your duck image
+        this.image.src = 'https://i.postimg.cc/28DhPVKj/duck.png';
       }
 
       draw() {
-        ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+        ctx.drawImage(this.image, this.x, this.y, this.size, this.size);
       }
 
       move() {
         this.y -= this.speed;
-        if (this.y + this.height < 0) {
+        if (this.y + this.size < 0) {
           this.reset();
         }
       }
 
       reset() {
-        this.x = Math.random() * (canvas.width - this.width);
+        this.x = Math.random() * (canvas.width - this.size);
         this.y = canvas.height;
       }
     }
@@ -146,42 +145,32 @@
       ducks.push(new Duck(Math.random() * (canvas.width - 50), canvas.height, Math.random() * 2 + 1));
     }
 
-    // Event listeners for shooting on both mouse and touch events
+    // Event listeners for shooting and crosshair movement
     canvas.addEventListener('click', shootDuck);
-    canvas.addEventListener('touchstart', shootDuck);
+    canvas.addEventListener('mousemove', moveCrosshair);
 
     function shootDuck(event) {
-      const clientX = event.clientX || event.touches[0].clientX;
-      const clientY = event.clientY || event.touches[0].clientY;
-
-      const mouseX = clientX - canvas.getBoundingClientRect().left;
-      const mouseY = clientY - canvas.getBoundingClientRect().top;
+      const mouseX = event.clientX - canvas.getBoundingClientRect().left;
+      const mouseY = event.clientY - canvas.getBoundingClientRect().top;
 
       ducks.forEach((duck, index) => {
         if (
           mouseX >= duck.x &&
-          mouseX <= duck.x + duck.width &&
+          mouseX <= duck.x + duck.size &&
           mouseY >= duck.y &&
-          mouseY <= duck.y + duck.height
+          mouseY <= duck.y + duck.size
         ) {
           score += 10;
           ducks[index].reset();
-          gunshotSound.play(); // Play gunshot sound
+          gunshotSound.play();
           updateScoreboard();
         }
       });
     }
 
-    // Event listeners for crosshair movement on both mouse and touch events
-    canvas.addEventListener('mousemove', moveCrosshair);
-    canvas.addEventListener('touchmove', moveCrosshair);
-
     function moveCrosshair(event) {
-      const clientX = event.clientX || event.touches[0].clientX;
-      const clientY = event.clientY || event.touches[0].clientY;
-
-      const mouseX = clientX - canvas.getBoundingClientRect().left;
-      const mouseY = clientY - canvas.getBoundingClientRect().top;
+      const mouseX = event.clientX - canvas.getBoundingClientRect().left;
+      const mouseY = event.clientY - canvas.getBoundingClientRect().top;
 
       crosshair.style.left = mouseX - crosshair.width / 2 + 'px';
       crosshair.style.top = mouseY - crosshair.height / 2 + 'px';
@@ -206,6 +195,17 @@
 
     // Start the game loop
     gameLoop();
+
+    // Check for touch support
+    if ('ontouchstart' in window || navigator.maxTouchPoints) {
+      hideCrosshairOnTouch();
+    }
+
+    function hideCrosshairOnTouch() {
+      canvas.addEventListener('touchstart', () => {
+        crosshair.style.display = 'none';
+      });
+    }
 
     // Check orientation for popup
     if (window.DeviceOrientationEvent) {
@@ -243,7 +243,6 @@
       canvas.height = window.innerHeight;
 
       // Game initialization code...
-      // For example, you might want to re-initialize your ducks array here
       ducks = [];
       for (let i = 0; i < 3; i++) {
         ducks.push(new Duck(Math.random() * (canvas.width - 50), canvas.height, Math.random() * 2 + 1));
